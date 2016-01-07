@@ -1,0 +1,56 @@
+package bank.two;
+
+import java.util.ArrayList;
+
+public class Bank {
+    private Mediator bankMediator;
+    private int bankCode;
+    private ArrayList<Transfer> outcomingTransfers;
+    private ArrayList<Account> accounts;
+
+    private int accountCodes;
+
+    public Bank(){
+        outcomingTransfers = new ArrayList<Transfer>();
+        accounts = new ArrayList<Account>();
+        accountCodes = 0;
+    }
+    public int getBankCode() {
+        return bankCode;
+    }
+
+    public ArrayList<Transfer> getTransfers() {
+        return this.outcomingTransfers;
+    }
+
+    public ArrayList<Account> getAccounts() {
+        return this.accounts;
+    }
+
+    public void setBankCode(int bankCode, Mediator newMediator) {
+        this.bankCode = bankCode;
+        this.bankMediator = newMediator;
+    }
+
+    public Account createAccount() {
+        accountCodes++;
+        Account account = new Account(this,accountCodes);
+        accounts.add(account);
+        return account;
+    }
+    public void addTransferToSession(Transfer transfer) {
+        outcomingTransfers.add(transfer);
+    }
+
+    public void outSession() {
+        bankMediator.receiveTransfers(outcomingTransfers);
+        outcomingTransfers.clear();
+    }
+    public void inSession() {
+        ArrayList<Transfer> incomingTransfers = new ArrayList<Transfer>();
+        incomingTransfers = bankMediator.sendTransfers(bankCode);
+        for(Transfer incomingTransfer: incomingTransfers){
+            incomingTransfer.execute();
+        }
+    }
+}
