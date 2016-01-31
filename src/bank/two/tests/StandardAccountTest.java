@@ -1,12 +1,15 @@
-package bank.two;
+package bank.two.tests;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import bank.two.Account;
+import bank.two.Bank;
+import bank.two.BankMediator;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AccountTest {
+public class StandardAccountTest {
     Bank firstBank;
     Bank secondBank;
     BankMediator bankMediator;
@@ -22,9 +25,9 @@ public class AccountTest {
         bankMediator.addBank(firstBank);
         bankMediator.addBank(secondBank);
 
-        firstAccount = firstBank.createAccount();
-        secondAccount = firstBank.createAccount();
-        thirdAccount = secondBank.createAccount();
+        firstAccount = firstBank.createStandardAccount();
+        secondAccount = firstBank.createStandardAccount();
+        thirdAccount = secondBank.createStandardAccount();
 
     }
     @Test
@@ -49,6 +52,12 @@ public class AccountTest {
         firstBank.outSession();
         secondBank.inSession();
         assertArrayEquals(new int[]{900,100}, new int[]{firstAccount.getBalance(),thirdAccount.getBalance()});
+    }
+    @Test
+    public void insufficientFunds() {
+        thirdAccount.depositMoney(50);
+        thirdAccount.transferMoney(secondAccount,100);
+        assertEquals(50, thirdAccount.getBalance());
     }
 
 }

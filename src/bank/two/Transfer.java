@@ -12,7 +12,9 @@ public class Transfer implements Command {
         this.amount = amount;
         this.isExecuted = false;
     }
-
+    public boolean checkStatus() {
+        return isExecuted;
+    }
     public Account getSrcAccount() {
         return this.srcAccount;
     }
@@ -24,8 +26,12 @@ public class Transfer implements Command {
     @Override
     public void execute() {
         if(!this.isExecuted){
-            this.srcAccount.reduceBalance(this.amount);
-            this.isExecuted = true;
+            try {
+                this.srcAccount.reduceBalance(this.amount);
+                this.isExecuted = true;
+            } catch (AccountException e) {
+                System.out.print(e);
+            }
         }
         else {
             this.dstAccount.increaseBalance(this.amount);

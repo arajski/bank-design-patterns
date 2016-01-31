@@ -12,6 +12,10 @@ public class Withdrawal implements Command{
 
     @Override
     public void execute() {
-        this.dstAccount.reduceBalance(this.amount);
+        try {
+            this.dstAccount.reduceBalance(this.amount);
+        } catch (AccountException e) {
+            System.out.print(e);
+        }
     }
 }

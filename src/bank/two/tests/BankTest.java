@@ -1,6 +1,9 @@
-package bank.two;
+package bank.two.tests;
 import static org.junit.Assert.assertEquals;
 
+import bank.two.Account;
+import bank.two.Bank;
+import bank.two.BankMediator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,9 +20,9 @@ public class BankTest {
         firstBank = new Bank();
         bankMediator.addBank(firstBank);
 
-        firstAccount = firstBank.createAccount();
-        secondAccount = firstBank.createAccount();
-        thirdAccount = firstBank.createAccount();
+        firstAccount = firstBank.createStandardAccount();
+        secondAccount = firstBank.createStandardAccount();
+        thirdAccount = firstBank.createStandardAccount();
     }
     @Test
     public void hasBankCode() {

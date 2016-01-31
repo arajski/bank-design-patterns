@@ -1,6 +1,9 @@
-package bank.two;
+package bank.two.tests;
 import static org.junit.Assert.assertEquals;
 
+import bank.two.Account;
+import bank.two.Bank;
+import bank.two.BankMediator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,9 +23,9 @@ public class BankMediatorTest {
         bankMediator.addBank(firstBank);
         bankMediator.addBank(secondBank);
 
-        firstAccount = firstBank.createAccount();
-        secondAccount = firstBank.createAccount();
-        thirdAccount = secondBank.createAccount();
+        firstAccount = firstBank.createStandardAccount();
+        secondAccount = firstBank.createStandardAccount();
+        thirdAccount = secondBank.createStandardAccount();
 
         firstAccount.depositMoney(1000);
         firstAccount.transferMoney(thirdAccount,100);
@@ -58,5 +61,11 @@ public class BankMediatorTest {
         firstBank.inSession();
         secondBank.inSession();
         assertEquals(0, bankMediator.getTransfers().size());
+    }
+    @Test
+    public void insufficientFunds() {
+        firstBank.outSession();
+        firstAccount.transferMoney(thirdAccount,1000);
+        assertEquals(3, bankMediator.getTransfers().size());
     }
 }
