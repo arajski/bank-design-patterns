@@ -32,12 +32,20 @@ public class Bank {
         this.bankMediator = newMediator;
     }
 
-    public Account createAccount() {
+    public Account createStandardAccount() {
         accountCodes++;
-        Account account = new Account(this,accountCodes);
+        Account account = new StandardAccount(this,accountCodes);
         accounts.add(account);
         return account;
     }
+
+    public Account createDebtAccount(int debtLimit) {
+        accountCodes++;
+        Account account = new DebtAccountDecorator(new StandardAccount(this,accountCodes),debtLimit);
+        accounts.add(account);
+        return account;
+    }
+
     public void addTransferToSession(Transfer transfer) {
         outcomingTransfers.add(transfer);
     }

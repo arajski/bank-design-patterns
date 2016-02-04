@@ -40,7 +40,7 @@ public class BankMediator implements Mediator {
 
         for (Iterator<Transfer> it = transfers.iterator(); it.hasNext(); ) {
             Transfer transfer = it.next();
-            if (transfer.getDstAccount().getAccountBankCode() == bankCode) {
+            if (transfer.getDestinationAccount().getAccountBankCode() == bankCode) {
                 outcomingTransfers.add(transfer);
                 it.remove();
             }

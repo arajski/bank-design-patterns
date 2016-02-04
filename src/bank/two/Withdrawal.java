@@ -2,16 +2,20 @@ package bank.two;
 
 public class Withdrawal implements Command{
 
-    private Account dstAccount;
+    private Account destinationAccount;
     private int amount;
 
-    public Withdrawal(Account dstAccount, int amount) {
+    public Withdrawal(Account destinationAccount, int amount) {
         this.amount = amount;
-        this.dstAccount = dstAccount;
+        this.destinationAccount = destinationAccount;
     }
 
     @Override
     public void execute() {
-        this.dstAccount.reduceBalance(this.amount);
+        try {
+            this.destinationAccount.reduceBalance(this.amount);
+        } catch (AccountException e) {
+            System.out.print(e);
+        }
     }
 }

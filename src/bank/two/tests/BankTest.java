@@ -1,6 +1,11 @@
-package bank.two;
+package bank.two.tests;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import bank.two.Account;
+import bank.two.Bank;
+import bank.two.BankMediator;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,9 +22,9 @@ public class BankTest {
         firstBank = new Bank();
         bankMediator.addBank(firstBank);
 
-        firstAccount = firstBank.createAccount();
-        secondAccount = firstBank.createAccount();
-        thirdAccount = firstBank.createAccount();
+        firstAccount = firstBank.createStandardAccount();
+        secondAccount = firstBank.createStandardAccount();
+        thirdAccount = firstBank.createStandardAccount();
     }
     @Test
     public void hasBankCode() {
@@ -47,6 +52,16 @@ public class BankTest {
 
         firstBank.outSession();
         assertEquals(0, firstBank.getTransfers().size());
+    }
+    @After // tearDown()
+    public void tearDown() {
+        System.out.println("Running: tearDown");
+        bankMediator = null;
+        firstBank = null;
+        firstAccount = null;
+        secondAccount = null;
+        thirdAccount = null;
+        assertArrayEquals(new Object[]{null,null,null,null,null}, new Object[]{bankMediator,firstBank,firstAccount,secondAccount,thirdAccount});
     }
 
 }

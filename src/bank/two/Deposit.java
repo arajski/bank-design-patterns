@@ -2,16 +2,16 @@ package bank.two;
 
 public class Deposit implements Command {
 
-    private Account dstAccount;
+    private Account destinationAccount;
     private int amount;
 
-    public Deposit(Account dstAccount, int amount) {
-        this.dstAccount = dstAccount;
+    public Deposit(Account destinationAccount, int amount) {
+        this.destinationAccount = destinationAccount;
         this.amount = amount;
     }
 
     @Override
     public void execute() {
-        this.dstAccount.increaseBalance(this.amount);
+        this.destinationAccount.increaseBalance(this.amount);
     }
 }
