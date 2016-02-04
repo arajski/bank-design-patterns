@@ -39,21 +39,21 @@ public class DebtAccountDecorator extends AccountDecorator {
     public void increaseBalance(int amount){
         if(debtBalance > 0 && amount < debtBalance) {
             debtBalance -= amount;
+            return;
         }
-        else if(debtBalance > 0 && amount > debtBalance) {
+        else if (debtBalance > 0 && amount > debtBalance) {
             account.increaseBalance(amount-debtBalance);
             debtBalance = 0;
+            return;
         }
-        else {
-            account.increaseBalance(amount);
-        }
+        account.increaseBalance(amount);
+
     }
     private int calculateDebt(int balance, int amount) {
-        if((balance - amount) >= 0)
+        if((balance - amount) >= 0) {
             return 0;
-        else {
-            return (-1)*(balance-amount);
         }
+        return (-1)*(balance-amount);
     }
     @Override
     public void reduceBalance(int amount) throws AccountException {
@@ -62,15 +62,12 @@ public class DebtAccountDecorator extends AccountDecorator {
 
             account.reduceBalance(account.getBalance());
             debtBalance += calculatedDebt;
+            return;
 
         } else if (calculatedDebt > 0 && (calculatedDebt > debtLimit - debtBalance)) {
 
             throw new AccountException("Insufficient funds");
-
-        } else if (calculateDebt(account.getBalance(), amount) <= 0) {
-
-            account.reduceBalance(amount);
-
         }
+        account.reduceBalance(amount);
     }
 }

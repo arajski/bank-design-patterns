@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 import bank.two.Account;
 import bank.two.Bank;
 import bank.two.BankMediator;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -83,6 +84,15 @@ public class DebtAccountDecoratorTest {
         secondBank.inSession();
         assertArrayEquals(new int[]{-60,10}, new int[]{firstAccount.getBalance(),thirdAccount.getBalance()});
     }
-
-
+    @After // tearDown()
+    public void tearDown() {
+        System.out.println("Running: tearDown");
+        bankMediator = null;
+        firstBank = null;
+        secondBank = null;
+        firstAccount = null;
+        secondAccount = null;
+        thirdAccount = null;
+        assertArrayEquals(new Object[]{null,null,null,null,null,null}, new Object[]{bankMediator,firstBank,secondBank,firstAccount,secondAccount,thirdAccount});
+    }
 }
