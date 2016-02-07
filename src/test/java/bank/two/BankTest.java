@@ -1,4 +1,5 @@
-package bank.two.tests;
+package bank.two;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 

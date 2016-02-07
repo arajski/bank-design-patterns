@@ -1,4 +1,4 @@
-package bank.two.tests;
+package bank.two;
 
 import bank.two.Investment;
 import static org.hamcrest.CoreMatchers.instanceOf;
