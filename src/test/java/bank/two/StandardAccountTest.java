@@ -62,7 +62,7 @@ public class StandardAccountTest {
     }
     @After // tearDown()
     public void tearDown() {
-        System.out.println("Running: tearDown");
+
         bankMediator = null;
         firstBank = null;
         secondBank = null;
