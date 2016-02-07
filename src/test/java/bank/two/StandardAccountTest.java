@@ -1,4 +1,4 @@
-package bank.two.tests;
+package bank.two;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DebtAccountDecoratorTest {
+public class StandardAccountTest {
     Bank firstBank;
     Bank secondBank;
     BankMediator bankMediator;
@@ -26,14 +26,10 @@ public class DebtAccountDecoratorTest {
         bankMediator.addBank(firstBank);
         bankMediator.addBank(secondBank);
 
-        firstAccount = firstBank.createDebtAccount(100);
+        firstAccount = firstBank.createStandardAccount();
         secondAccount = firstBank.createStandardAccount();
         thirdAccount = secondBank.createStandardAccount();
 
-    }
-    @Test
-    public void checkInitialDebt() {
-        assertEquals(0, firstAccount.getBalance());
     }
     @Test
     public void assignAccountNumber() {
@@ -59,34 +55,14 @@ public class DebtAccountDecoratorTest {
         assertArrayEquals(new int[]{900,100}, new int[]{firstAccount.getBalance(),thirdAccount.getBalance()});
     }
     @Test
-    public void increaseDebt() {
-        firstAccount.depositMoney(100);
-        firstAccount.withdrawMoney(150);
-        firstAccount.withdrawMoney(20);
-        assertEquals(-70, firstAccount.getBalance());
-    }
-    @Test
-    public void payDebt() {
-        firstAccount.depositMoney(100);
-        firstAccount.withdrawMoney(110);
-        firstAccount.depositMoney(20);
-        assertEquals(10, firstAccount.getBalance());
-    }
-    @Test
-    public void exceedDebt() {
-        firstAccount.depositMoney(100);
-        firstAccount.withdrawMoney(150);
-        firstAccount.transferMoney(thirdAccount,10);
-        firstBank.outSession();
-        secondBank.inSession();
-        firstAccount.transferMoney(thirdAccount,200);
-        firstBank.outSession();
-        secondBank.inSession();
-        assertArrayEquals(new int[]{-60,10}, new int[]{firstAccount.getBalance(),thirdAccount.getBalance()});
+    public void insufficientFunds() {
+        thirdAccount.depositMoney(50);
+        thirdAccount.transferMoney(secondAccount,100);
+        assertEquals(50, thirdAccount.getBalance());
     }
     @After // tearDown()
     public void tearDown() {
-        System.out.println("Running: tearDown");
+
         bankMediator = null;
         firstBank = null;
         secondBank = null;
@@ -95,4 +71,5 @@ public class DebtAccountDecoratorTest {
         thirdAccount = null;
         assertArrayEquals(new Object[]{null,null,null,null,null,null}, new Object[]{bankMediator,firstBank,secondBank,firstAccount,secondAccount,thirdAccount});
     }
+
 }

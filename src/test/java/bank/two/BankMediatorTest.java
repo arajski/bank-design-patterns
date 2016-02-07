@@ -1,4 +1,5 @@
-package bank.two.tests;
+package bank.two;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
@@ -72,7 +73,7 @@ public class BankMediatorTest {
     }
     @After // tearDown()
     public void tearDown() {
-        System.out.println("Running: tearDown");
+
         bankMediator = null;
         firstBank = null;
         secondBank = null;
