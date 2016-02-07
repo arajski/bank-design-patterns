@@ -1,5 +1,8 @@
 package bank.two;
 
+import bank.two.reporting_visitor.Report;
+import bank.two.reporting_visitor.ReportingVisitor;
+
 import java.util.ArrayList;
 
 public class Bank {
@@ -7,10 +10,12 @@ public class Bank {
     private int bankCode;
     private ArrayList<Transfer> outcomingTransfers;
     private ArrayList<Account> accounts;
+    private Report visitor;
 
     private int accountCodes;
 
     public Bank(){
+        visitor = new Report();
         outcomingTransfers = new ArrayList<Transfer>();
         accounts = new ArrayList<Account>();
         accountCodes = 0;
@@ -60,5 +65,9 @@ public class Bank {
         for(Transfer incomingTransfer: incomingTransfers){
             incomingTransfer.execute();
         }
+    }
+
+    public Report getVisitor() {
+        return this.visitor;
     }
 }

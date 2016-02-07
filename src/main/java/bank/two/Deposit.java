@@ -1,6 +1,9 @@
 package bank.two;
 
-public class Deposit implements Command {
+import bank.two.reporting_visitor.ReportingObject;
+import bank.two.reporting_visitor.ReportingVisitor;
+
+public class Deposit implements Command, ReportingObject {
 
     private Account destinationAccount;
     private int amount;
@@ -13,5 +16,16 @@ public class Deposit implements Command {
     @Override
     public void execute() {
         this.destinationAccount.increaseBalance(this.amount);
+    }
+
+
+    @Override
+    public int objectValue() {
+        return this.amount;
+    }
+
+    @Override
+    public void addToVisitor(ReportingVisitor visitor) {
+        visitor.visit(this);
     }
 }

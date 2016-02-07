@@ -1,6 +1,5 @@
 package bank.two;
 
-import bank.two.Investment;
 import static org.hamcrest.CoreMatchers.instanceOf;
 
 import bank.two.investment_state.*;
